@@ -2,7 +2,7 @@
 
 > **Know the reality of your land, not just the record of it.**
 
-**Team DevWitches · SIH26014**
+**Team DevWitches**
 
 | | |
 |---|---|
