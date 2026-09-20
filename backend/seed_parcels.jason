@@ -1,0 +1,98 @@
+[
+  {
+    "ulpin": "28065010041001",
+    "owner_name": "Ramesh Kumar",
+    "area_acres": 2.4,
+    "land_type": "Agricultural",
+    "status": "clear",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [[80.60, 16.50], [80.61, 16.50], [80.61, 16.51], [80.60, 16.51], [80.60, 16.50]]
+      ]
+    },
+    "documents": [
+      "https://gis-land-parcels-gayatri.s3.us-east-1.amazonaws.com/deeds_docs/28065010041001_deed.pdf"
+    ]
+  },
+  {
+    "ulpin": "28065010041002",
+    "owner_name": "Lakshmi Narayana",
+    "area_acres": 1.8,
+    "land_type": "Residential",
+    "status": "flagged",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [[80.61, 16.50], [80.62, 16.50], [80.62, 16.51], [80.61, 16.51], [80.61, 16.50]]
+      ]
+    },
+    "documents": [
+      "https://gis-land-parcels-gayatri.s3.us-east-1.amazonaws.com/deeds_docs/28065010041002_deed.pdf"
+    ]
+  },
+  {
+    "ulpin": "28065010041003",
+    "owner_name": "Srinivas.B",
+    "area_acres": 15,
+    "land_type": "Agricultural",
+    "status": "clear",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [[80.62, 16.50], [80.63, 16.50], [80.63, 16.51], [80.62, 16.51], [80.62, 16.50]]
+      ]
+    },
+    "documents": [
+      "https://gis-land-parcels-gayatri.s3.us-east-1.amazonaws.com/deeds_docs/28065010041003_deed.pdf"
+    ]
+  },
+  {
+    "ulpin": "28065010041004",
+    "owner_name": "Suguna.B",
+    "area_acres": 13.5,
+    "land_type": "Agricultural",
+    "status": "clear",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [[80.60, 16.51], [80.61, 16.51], [80.61, 16.52], [80.60, 16.52], [80.60, 16.51]]
+      ]
+    },
+    "documents": [
+      "https://gis-land-parcels-gayatri.s3.us-east-1.amazonaws.com/deeds_docs/28065010041004_deed.pdf"
+    ]
+  },
+  {
+    "ulpin": "28065010041005",
+    "owner_name": "Vijay Kumar",
+    "area_acres": 6.7,
+    "land_type": "Agricultural",
+    "status": "clear",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [[80.61, 16.51], [80.62, 16.51], [80.62, 16.52], [80.61, 16.52], [80.61, 16.51]]
+      ]
+    },
+    "documents": [
+      "https://gis-land-parcels-gayatri.s3.us-east-1.amazonaws.com/deeds_docs/28065010041005_deed.pdf"
+    ]
+  },
+  {
+    "ulpin": "28065010041006",
+    "owner_name": "Geeta Devi",
+    "area_acres": 7.9,
+    "land_type": "Residential",
+    "status": "clear",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [[80.62, 16.51], [80.63, 16.51], [80.63, 16.52], [80.62, 16.52], [80.62, 16.51]]
+      ]
+    },
+    "documents": [
+      "https://gis-land-parcels-gayatri.s3.us-east-1.amazonaws.com/deeds_docs/28065010041006_deed.pdf"
+    ]
+  }
+]
