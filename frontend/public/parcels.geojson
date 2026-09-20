@@ -1,0 +1,243 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "ULPIN": "AP-MAR-001",
+                "owner_name": "Ramesh Kumar",
+                "area_acres": 2.4,
+                "land_type": "Agricultural",
+                "status": "clear"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            79.655412,
+                            15.014413
+                        ],
+                        [
+                            79.655368,
+                            15.014413
+                        ],
+                        [
+                            79.655363,
+                            15.014347
+                        ],
+                        [
+                            79.655438,
+                            15.014344
+                        ],
+                        [
+                            79.655441,
+                            15.014384
+                        ],
+                        [
+                            79.655411,
+                            15.014387
+                        ],
+                        [
+                            79.655412,
+                            15.014413
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ULPIN": "AP-MAR-002",
+                "owner_name": "Lakshmi Narayana",
+                "area_acres": 1.8,
+                "land_type": "Residential",
+                "status": "flagged"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            79.655527,
+                            15.014477
+                        ],
+                        [
+                            79.655522,
+                            15.014411
+                        ],
+                        [
+                            79.655601,
+                            15.014405
+                        ],
+                        [
+                            79.655605,
+                            15.01445
+                        ],
+                        [
+                            79.655574,
+                            15.014451
+                        ],
+                        [
+                            79.655575,
+                            15.014473
+                        ],
+                        [
+                            79.655527,
+                            15.014477
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ULPIN": "AP-MAR-003",
+                "owner_name": "Srinivas.B",
+                "area_acres": 15,
+                "land_type": "Agricultural",
+                "status": "clear"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            79.655516,
+                            15.014401
+                        ],
+                        [
+                            79.655517,
+                            15.014339
+                        ],
+                        [
+                            79.655618,
+                            15.014343
+                        ],
+                        [
+                            79.655615,
+                            15.014404
+                        ],
+                        [
+                            79.655516,
+                            15.014401
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ULPIN": "AP-MAR-004",
+                "owner_name": "Suguna.B",
+                "area_acres": 13.5,
+                "land_type": "Agricultural",
+                "status": "clear"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            79.655705,
+                            15.014274
+                        ],
+                        [
+                            79.655704,
+                            15.014191
+                        ],
+                        [
+                            79.655789,
+                            15.014183
+                        ],
+                        [
+                            79.655795,
+                            15.01427
+                        ],
+                        [
+                            79.655705,
+                            15.014274
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ULPIN": "AP-MAR-005",
+                "owner_name": "Vijay Kumar",
+                "area_acres": 6.7,
+                "land_type": "Agricultural",
+                "status": "clear"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            79.655752,
+                            15.013773
+                        ],
+                        [
+                            79.655749,
+                            15.013721
+                        ],
+                        [
+                            79.655823,
+                            15.013718
+                        ],
+                        [
+                            79.655826,
+                            15.013766
+                        ],
+                        [
+                            79.655752,
+                            15.013773
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ULPIN": "AP-MAR-006",
+                "owner_name": "Geeta Devi",
+                "area_acres": 7.9,
+                "land_type": "Residential",
+                "status": "clear"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            79.655743,
+                            15.0137
+                        ],
+                        [
+                            79.655748,
+                            15.013639
+                        ],
+                        [
+                            79.655823,
+                            15.01364
+                        ],
+                        [
+                            79.655822,
+                            15.013699
+                        ],
+                        [
+                            79.655743,
+                            15.0137
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}
