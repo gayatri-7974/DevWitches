@@ -1,6 +1,6 @@
 import L from "leaflet";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -9,6 +9,18 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
+
+const FUNCTION_URL =
+  "https://k2m2gxex4ccsttgrpspspljq5m0ypfyq.lambda-url.us-east-1.on.aws/";
+const DEED_BASE_URL =
+  "https://gis-land-parcels-gayatri.s3.us-east-1.amazonaws.com/deeds_docs";
+
+// Map IDs shown on the map -> file IDs used in S3 / Lambda
+// AP-MAR-006 -> 28065010041006 (works for every parcel number)
+function toS3Id(id) {
+  const match = /^AP-MAR-(\d+)$/i.exec(String(id).trim());
+  return match ? "28065010041" + match[1].padStart(3, "0") : String(id);
+}
 
 function FitParcels({ data }) {
   const map = useMap();
@@ -25,6 +37,70 @@ function FitParcels({ data }) {
   }, [data, map]);
 
   return null;
+}
+
+// Deed PDF link + AI scan. Has its own state so the map does not reset.
+function ParcelTools({ ulpin: mapUlpin }) {
+  const ulpin = toS3Id(mapUlpin);
+  const [scan, setScan] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [scanError, setScanError] = useState("");
+
+  async function runScan() {
+    setLoading(true);
+    setScan(null);
+    setScanError("");
+
+    try {
+      const res = await fetch(
+        `${FUNCTION_URL}?ulpin=${encodeURIComponent(ulpin)}`
+      );
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Scan failed");
+      }
+      setScan(data.scan_result);
+    } catch (err) {
+      setScanError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div style={{ marginTop: "16px" }}>
+      <p>
+        <a
+          href={`${DEED_BASE_URL}/${ulpin}_deed.pdf`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          📄 View deed PDF
+        </a>
+      </p>
+
+      <button className="btn-primary" onClick={runScan} disabled={loading}>
+        {loading ? "Scanning imagery..." : "Run AI encroachment scan"}
+      </button>
+
+      {scanError && <p className="error">{scanError}</p>}
+
+      {scan && (
+        <div style={{ marginTop: "12px" }}>
+          <p>
+            <strong>
+              {scan.encroachment_detected
+                ? "⚠️ Encroachment detected"
+                : "✅ No encroachment detected"}
+            </strong>{" "}
+            (confidence: {scan.confidence})
+          </p>
+          <p>{scan.summary}</p>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function App() {
@@ -95,75 +171,76 @@ function App() {
           className="map"
         >
           <TileLayer
-            attribution='Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics'
+            attribution="Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics"
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           />
 
+          {parcels && (
+            <>
+              <GeoJSON
+                key={search}
+                data={{
+                  ...parcels,
+                  features: filtered,
+                }}
+                style={{
+                  color: "#facc15",
+                  weight: 2,
+                  fillColor: "#22c55e",
+                  fillOpacity: 0.25,
+                }}
+                onEachFeature={(feature, layer) => {
+                  const properties = feature.properties || {};
 
+                  layer.bindTooltip(
+                    String(
+                      getValue(properties, [
+                        "ULPIN",
+                        "ulpin",
+                        "parcel_id",
+                        "id",
+                      ])
+                    )
+                  );
 
-{parcels && (
-  <>
-    <GeoJSON
-      key={search}
-      data={{
-        ...parcels,
-        features: filtered,
-      }}
-      style={{
-        color: "#facc15",
-        weight: 2,
-        fillColor: "#22c55e",
-        fillOpacity: 0.25,
-      }}
-      onEachFeature={(feature, layer) => {
-        const properties = feature.properties || {};
+                  layer.on("click", (e) => {
+                    const clickedLayer = e.target;
+                    const map = clickedLayer._map;
 
-        layer.bindTooltip(
-          String(
-            getValue(properties, [
-              "ULPIN",
-              "ulpin",
-              "parcel_id",
-              "id",
-            ])
-          )
-        );
+                    setSelected(clickedLayer.feature?.properties || {});
 
-      layer.on("click", (e) => {
-  const clickedLayer = e.target;
-  const map = clickedLayer._map;
+                    if (map && clickedLayer.getBounds) {
+                      const bounds = clickedLayer.getBounds();
 
-  setSelected(clickedLayer.feature?.properties || {});
+                      map.fitBounds(bounds, {
+                        padding: [20, 20],
+                        maxZoom: 22,
+                        animate: true,
+                      });
 
-  if (map && clickedLayer.getBounds) {
-    const bounds = clickedLayer.getBounds();
+                      map.once("moveend", () => {
+                        if (map.getZoom() < 18) {
+                          map.setZoom(18);
+                        }
+                      });
+                    }
+                  });
+                }}
+              />
 
-    map.fitBounds(bounds, {
-      padding: [20, 20],
-      maxZoom: 22,
-      animate: true,
-    });
-
-    map.once("moveend", () => {
-      if (map.getZoom() < 18) {
-        map.setZoom(18);
-      }
-    });
+              <FitParcels data={parcels} />
+            </>
+          )}
+        </MapContainer>
+      </div>
+    );
   }
-});
-      }}
-    />
-
-    <FitParcels data={parcels} />
-  </>
-)}
-</MapContainer>
-</div>
-);
-}
-         
 
   function Dashboard({ officer = false }) {
+    const selectedUlpin = selected
+      ? getValue(selected, ["ULPIN", "ulpin", "parcel_id", "id"])
+      : null;
+
     return (
       <div className="app">
         <header className="header">
@@ -184,9 +261,7 @@ function App() {
             <p className="eyebrow">
               {officer ? "ADMINISTRATION" : "CITIZEN SERVICES"}
             </p>
-            <h2>
-              {officer ? "Officer Dashboard" : "User Dashboard"}
-            </h2>
+            <h2>{officer ? "Officer Dashboard" : "User Dashboard"}</h2>
             <p className="subtitle">
               {officer
                 ? "Explore parcels and review land information."
@@ -237,12 +312,12 @@ function App() {
 
             {selected && (
               <div className="parcel-details">
-                <h3>Selected Parcel</h3>
-                {Object.entries(selected).map(([key, value]) => (
-                  <p key={key}>
-                    <strong>{key}:</strong> {String(value ?? "Not available")}
-                  </p>
-                ))}
+                {selectedUlpin !== "Not available" && (
+                  <ParcelTools
+                    key={String(selectedUlpin)}
+                    ulpin={String(selectedUlpin)}
+                  />
+                )}
               </div>
             )}
           </section>
@@ -335,8 +410,8 @@ function App() {
         <p className="eyebrow">SMART LAND GOVERNANCE</p>
         <h2>Connecting people to their land.</h2>
         <p>
-          Explore land parcels through satellite imagery and access
-          land information through a unified digital platform.
+          Explore land parcels through satellite imagery and access land
+          information through a unified digital platform.
         </p>
 
         <div className="hero-actions">
@@ -375,10 +450,9 @@ function App() {
               className="map"
             >
               <TileLayer
-                attribution='Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics'
+                attribution="Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics"
                 url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
               />
-   
             </MapContainer>
           </div>
           <p className="map-caption">
